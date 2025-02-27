@@ -4,10 +4,9 @@ import { addItem } from "../features/cart/cartSlice";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
+
   const addToCart = () => {
-    console.log("Added to cart: ", product.id);
-    const item = { product_id: product.id, quantity: 1 };
-    dispatch(addItem(item));
+    dispatch(addItem({ product_id: product.id, quantity: 1 }));
   };
 
   return (
@@ -49,7 +48,7 @@ function ProductCard({ product }) {
         {/* Add to Cart Button */}
         <button
           onClick={addToCart}
-          className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 transition-colors duration-300 font-medium"
+          className="w-full active:bg-white  active:text-green-600 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 transition-colors duration-300 font-medium"
         >
           Add to Cart
         </button>

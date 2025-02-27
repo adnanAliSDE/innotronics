@@ -7,7 +7,11 @@ import { NavLink } from "react-router";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const cart_count = useSelector((state) => state.items).length;
+
+  const cart_count = useSelector((state) => state.items).reduce(
+    (acc, item) => (acc += item.quantity),
+    0
+  );
 
   const NAV_ITEMS = [
     {
@@ -67,25 +71,30 @@ function Header() {
           <nav className="hidden lg:block">
             <ul className="flex space-x-2">
               {NAV_ITEMS.map((item) => (
-                <NavItem
-                  key={item.to}
-                  to={item.to}
-                  label={item.label}
-                  icon={item.icon}
-                />
+                <li key={item.to}>
+                  <NavItem to={item.to} label={item.label} icon={item.icon} />
+                </li>
               ))}
             </ul>
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <button
-            className="lg:hidden p-2 focus:outline-none text-white hover:text-green-500 transition-colors"
-            onClick={toggleMenu}
-            aria-label="Toggle Menu"
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-          </button>
+          <div className="lg:hidden wrapper flex ">
+            <NavItem
+              to={NAV_ITEMS.at(1).to}
+              label={NAV_ITEMS.at(1).label}
+              icon={NAV_ITEMS.at(1).icon}
+            />
+
+            <button
+              className="lg:hidden p-2 focus:outline-none text-white hover:text-green-500 transition-colors"
+              onClick={toggleMenu}
+              aria-label="Toggle Menu"
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -98,12 +107,9 @@ function Header() {
         >
           <ul className="flex flex-col space-y-2">
             {NAV_ITEMS.map((item) => (
-              <NavItem
-                key={item.to}
-                to={item.to}
-                label={item.label}
-                icon={item.icon}
-              />
+              <li key={item.to}>
+                <NavItem to={item.to} label={item.label} icon={item.icon} />
+              </li>
             ))}
           </ul>
         </div>

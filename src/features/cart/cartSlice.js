@@ -15,7 +15,6 @@ const cartSlice = createSlice({
       );
       // takes product id and qty
       if (item_index === -1) {
-        console.log(item_index);
         const item = {
           id: nanoid(5),
           product_id,
